@@ -1,18 +1,33 @@
+
 <!DOCTYPE html>
 <html>
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-  <!-- we import arjs version without NFT but with marker + location based support -->
+  <script src="https://unpkg.com/aframe-extras@6.1.1/dist/aframe-extras.loaders.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <body style="margin: 0px; overflow: hidden;">
     <a-scene embedded arjs>
+      <!-- Loading screen -->
+      <a-loading
+        id="modelLoader"
+        loadingBarColor="#3498db"
+        loadingBarHeight="0.05"
+        loadingBarWidth="1.2"
+        backgroundColor="#000"
+        defaultColor="#ffffff"
+        text="Loading..."
+      ></a-loading>
+
       <a-marker preset="hiro">
         <a-entity
+          id="yourModelEntity"
           position="0 0 0"
-          scale="0.1 0.1 0.1"
-          rotation="-90 0 0"
+          scale="0.05 0.05 0.05"
+          rotation="90 0 0"
           gltf-model="src/scene.gltf"
+          events-loaded="#modelLoader:hide"
         ></a-entity>
       </a-marker>
+
       <a-entity camera></a-entity>
     </a-scene>
   </body>
