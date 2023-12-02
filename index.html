@@ -39,17 +39,15 @@
     <div id="loading-screen">
       <p id="loading-text">Loading...</p>
     </div>
-    <a-scene embedded arjs>
-      <a-marker preset="hiro">
-        <a-entity
-          id="yourModelEntity"
-          scale="6 6 6 6"         
-          rotation="0 150 0"
-          position="0 0 0"
-          gltf-model="src/XmasTree.gltf"
-          model-loader
-        ></a-entity>
-      </a-marker>
+    <a-scene embedded>
+      <a-entity
+        id="yourModelEntity"
+        scale="6 6 6"
+        rotation="0 150 0"
+        position="0 0 0"
+        gltf-model="src/XmasTree.gltf"
+        model-loader
+      ></a-entity>
 
       <a-entity camera></a-entity>
     </a-scene>
