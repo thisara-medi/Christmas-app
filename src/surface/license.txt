@@ -1,0 +1,11 @@
+Model Information:
+* title:	#11 Snow "Inktober2019"
+* source:	https://sketchfab.com/3d-models/11-snow-inktober2019-a3c0d362e662463f8a6722fabfc23f19
+* author:	Canary Games (https://sketchfab.com/CapAlatriste)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "#11 Snow "Inktober2019"" (https://sketchfab.com/3d-models/11-snow-inktober2019-a3c0d362e662463f8a6722fabfc23f19) by Canary Games (https://sketchfab.com/CapAlatriste) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
