@@ -37,17 +37,17 @@
           animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
           model-loader
         ></a-entity>
+        <a-entity
+          id="yourModelEntity2"
+          scale="2 2 2"
+          rotation="0 0 0"
+          position="0 0 0"
+          gltf-model="src/surface/scene.gltf"
+          animation-mixer
+          model-loader
+          visible="false"
+        ></a-entity>
       </a-anchor>
-      <a-entity
-        id="yourModelEntity2"
-        scale="2 2 2"
-        rotation="0 0 0"
-        position="0 0 0"
-        gltf-model="src/surface/scene.gltf"
-        animation-mixer
-        model-loader
-        visible="false"
-      ></a-entity>
       <a-entity camera look-controls></a-entity>
     </a-scene>
 
@@ -69,14 +69,12 @@
       function handleSurfaceFound() {
         console.log("Surface Found");
         // You can perform actions when a surface is found
-        document.getElementById("yourModelEntity").setAttribute("visible", "true");
         document.getElementById("yourModelEntity2").setAttribute("visible", "true");
       }
 
       function handleSurfaceLost() {
         console.log("Surface Lost");
         // You can perform actions when a surface is lost
-        document.getElementById("yourModelEntity").setAttribute("visible", "false");
         document.getElementById("yourModelEntity2").setAttribute("visible", "false");
       }
     </script>
