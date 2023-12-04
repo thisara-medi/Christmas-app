@@ -40,6 +40,7 @@
       <p id="loading-text">Loading...</p>
     </div>
     <a-scene embedded>
+      <a-marker preset="hiro">
       <a-entity
         id="yourModelEntity"
         scale="8 8 8 8"
@@ -58,7 +59,7 @@
         animation-mixer
         model-loader
       ></a-entity>
-
+      </a-marker>
       <a-entity camera look-controls></a-entity>
     </a-scene>
   </body>
