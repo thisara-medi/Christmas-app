@@ -66,10 +66,10 @@
       <p id="loading-text">Loading...</p>
     </div>
     <a-scene embedded>
-      <a-marker preset="hiro" marker-tracker="camera: #myCamera">
+      <a-marker preset="hiro">
         <!-- Your model entities here -->
       </a-marker>
-      <a-entity id="myCamera" camera look-controls></a-entity>
+    
 
       <a-assets>
         <!-- Load your assets here -->
@@ -96,6 +96,8 @@
           animation-mixer
         ></a-entity>
       </a-entity>
+
+      <a-entity camera ></a-entity>
     </a-scene>
 
     <script>
