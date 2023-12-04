@@ -46,6 +46,7 @@
         gltf-model="src/surface/scene.gltf"
         animation-mixer
         model-loader
+        visible="false" 
       ></a-entity>
       <a-entity camera look-controls></a-entity>
     </a-scene>
@@ -67,14 +68,14 @@
 
       function handleSurfaceFound() {
         console.log("Surface Found");
-        // Set the visibility of your models when the surface is found
-        document.getElementById("yourModelEntity").setAttribute("visible", true);
-        document.getElementById("yourModelEntity2").setAttribute("visible", true);
+        // You can perform actions when a surface is found
+        document.getElementById("yourModelEntity2").setAttribute("visible", "true");
       }
 
       function handleSurfaceLost() {
         console.log("Surface Lost");
         // You can perform actions when a surface is lost
+        document.getElementById("yourModelEntity2").setAttribute("visible", "false");
       }
     </script>
   </body>
