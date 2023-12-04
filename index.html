@@ -42,7 +42,7 @@
       <p id="loading-text">Loading...</p>
     </div>
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: true;">
-      <a-anchor hit-testing-enabled="true" arjs-hit="handleSurfaceFound" arjs-hitend="handleSurfaceLost">
+      <a-anchor hit-testing-enabled="true"  trackingMethod: best arjs-hit="handleSurfaceFound" arjs-hitend="handleSurfaceLost">
         <a-entity
           id="yourModelEntity"
           scale="8 8 8"
@@ -51,6 +51,7 @@
           gltf-model="src/XmasTree.gltf"
           animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
           model-loader
+          visible="true"
         ></a-entity>
      
       <a-entity
@@ -61,7 +62,7 @@
         gltf-model="src/surface/scene.gltf"
         animation-mixer
         model-loader
-        visible="false"
+        visible="true"
       ></a-entity>
     </a-anchor>
       <a-entity camera look-controls></a-entity>
