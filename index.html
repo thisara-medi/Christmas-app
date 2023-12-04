@@ -35,25 +35,44 @@
           loadingText.textContent = "Loading...";
         },
       });
+
+      AFRAME.registerComponent("arjs-anchor-listener", {
+        init: function () {
+          this.el.addEventListener("hitstart", this.handleSurfaceFound.bind(this));
+          this.el.addEventListener("hitend", this.handleSurfaceLost.bind(this));
+        },
+
+        handleSurfaceFound: function () {
+          console.log("Surface Found");
+          // You can perform actions when a surface is found
+          document.getElementById("yourModelEntity").setAttribute("visible", "true");
+          document.getElementById("yourModelEntity2").setAttribute("visible", "true");
+        },
+
+        handleSurfaceLost: function () {
+          console.log("Surface Lost");
+          // You can perform actions when a surface is lost
+          document.getElementById("yourModelEntity").setAttribute("visible", "false");
+          document.getElementById("yourModelEntity2").setAttribute("visible", "false");
+        }
+      });
     </script>
   </head>
   <body style="margin: 0px; overflow: hidden;">
     <div id="loading-screen">
       <p id="loading-text">Loading...</p>
     </div>
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: true;">
-      <a-anchor hit-testing-enabled="true"  trackingMethod: best arjs-hit="handleSurfaceFound" arjs-hitend="handleSurfaceLost">
-        <a-entity
-          id="yourModelEntity"
-          scale="8 8 8"
-          rotation="0 0 0"
-          position="0 0 0"
-          gltf-model="src/XmasTree.gltf"
-          animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
-          model-loader
-          visible="true"
-        ></a-entity>
-     
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+      <a-entity
+        id="yourModelEntity"
+        scale="8 8 8"
+        rotation="0 0 0"
+        position="0 0 0"
+        gltf-model="src/XmasTree.gltf"
+        animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
+        model-loader
+        arjs-anchor-listener
+      ></a-entity>
       <a-entity
         id="yourModelEntity2"
         scale="2 2 2"
@@ -62,26 +81,10 @@
         gltf-model="src/surface/scene.gltf"
         animation-mixer
         model-loader
-        visible="true"
+        visible="false"
+        arjs-anchor-listener
       ></a-entity>
-    </a-anchor>
       <a-entity camera look-controls></a-entity>
     </a-scene>
-
-    <script>
-      function handleSurfaceFound() {
-    console.log("Surface Found");
-    // You can perform actions when a surface is found
-    document.getElementById("yourModelEntity").setAttribute("visible", "true");
-    document.getElementById("yourModelEntity2").setAttribute("visible", "true");
-  }
-
-  function handleSurfaceLost() {
-    console.log("Surface Lost");
-    // You can perform actions when a surface is lost
-    document.getElementById("yourModelEntity").setAttribute("visible", "false");
-    document.getElementById("yourModelEntity2").setAttribute("visible", "false");
-  }
-    </script>
   </body>
 </html>
