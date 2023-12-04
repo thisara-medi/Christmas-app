@@ -26,24 +26,15 @@
         const loadingScreen = document.getElementById("loading-screen");
         const loadingText = document.getElementById("loading-text");
 
+        // Hide loading screen initially
+        loadingScreen.style.display = "none";
+
         this.el.addEventListener("model-loaded", () => {
           loadingScreen.style.display = "none";
         });
 
-        this.el.sceneEl.addEventListener("markerFound", () => {
-          // Make the model fully visible when marker is found
-          this.el.object3D.visible = true;
-          loadingText.textContent = "Loading...";
-        });
-
-        this.el.sceneEl.addEventListener("markerLost", () => {
-          // Keep the model visible when marker is lost
-          this.el.object3D.visible = true;
-          loadingText.textContent = "Marker lost. Please bring it back into view.";
-        });
-
-        // Set the initial visibility to false
-        this.el.object3D.visible = false;
+        // Show loading text initially
+        loadingText.textContent = "Loading...";
       },
     });
   </script>
