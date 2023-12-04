@@ -30,19 +30,19 @@
           loadingScreen.style.display = "none";
         });
 
-        // Show loading screen initially
-        loadingText.textContent = "Loading...";
-      },
-    });
-
-    AFRAME.registerComponent("tap-place", {
-      init: function () {
-        const scene = document.querySelector("a-scene");
-
-        scene.addEventListener("click", (event) => {
-          const touchPoint = event.detail.intersection.point;
-          this.el.object3D.position.copy(touchPoint);
+        this.el.sceneEl.addEventListener("markerFound", () => {
+          // Make the model fully visible when marker is found
+          this.el.object3D.visible = true;
+          loadingText.textContent = "Loading...";
         });
+
+        this.el.sceneEl.addEventListener("markerLost", () => {
+          // Keep the model visible when marker is lost
+          loadingText.textContent = "Marker lost. Please bring it back into view.";
+        });
+
+        // Set the initial visibility to false
+        this.el.object3D.visible = false;
       },
     });
   </script>
@@ -50,27 +50,28 @@
     <div id="loading-screen">
       <p id="loading-text">Loading...</p>
     </div>
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+    <a-scene embedded>
+      <a-marker preset="hiro">
+        <a-entity
+          id="yourModelEntity"
+          scale="8 8 8 8"
+          rotation="0 0 0"
+          position="0 0 0"
+          gltf-model="src/XmasTree.gltf"
+          animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
+          model-loader
+        ></a-entity>
+        <a-entity
+          id="yourModelEntity2"
+          scale="2 2 2 2"
+          rotation="0 0 0"
+          position="0 0 0"
+          gltf-model="src/surface/scene.gltf"
+          animation-mixer
+          model-loader
+        ></a-entity>
+      </a-marker>
       <a-entity camera look-controls></a-entity>
-      <a-entity
-        id="yourModelEntity"
-        scale="8 8 8"
-        rotation="0 0 0"
-        position="0 0 0"
-        gltf-model="src/XmasTree.gltf"
-        animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
-        model-loader
-      ></a-entity>
-      <a-entity
-        id="yourModelEntity2"
-        scale="2 2 2"
-        rotation="0 0 0"
-        position="0 0 0"
-        gltf-model="src/surface/scene.gltf"
-        animation-mixer
-        model-loader
-        tap-place
-      ></a-entity>
     </a-scene>
   </body>
 </html>
