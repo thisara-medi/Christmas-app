@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <script
- 
-src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-
-  
-<script
- 
-src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <style>
     #loading-screen {
       position: absolute;
@@ -41,17 +35,19 @@ src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"><
             const cameraPosition = camera.getAttribute("position");
             const cameraRotation = camera.getAttribute("rotation");
 
-            // Convert camera rotation from Euler angles to quaternion
-            const cameraQuaternion = THREE.Quaternion.fromEuler(cameraRotation);
+            const cameraQuaternion = new THREE.Quaternion().setFromEuler(
+              new THREE.Euler(
+                THREE.MathUtils.degToRad(cameraRotation.x),
+                THREE.MathUtils.degToRad(cameraRotation.y),
+                THREE.MathUtils.degToRad(cameraRotation.z),
+                'XYZ'
+              )
+            );
 
-            // Calculate the new marker position based on the camera position and rotation
             const newMarkerPosition = transformLocalToWorldCoordinates(marker.getAttribute('position'), cameraPosition, cameraQuaternion);
-
-            // Update the marker's position
             marker.setAttribute("position", newMarkerPosition);
           };
 
-          // Add event listener for camera position and rotation changes
           camera.addEventListener("positionchange", updateMarkerPose);
           camera.addEventListener("rotationchange", updateMarkerPose);
         });
@@ -59,44 +55,60 @@ src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"><
     });
 
     function transformLocalToWorldCoordinates(localPosition, cameraPosition, cameraQuaternion) {
-      // Apply camera rotation to local position
-      const rotatedPosition = new THREE.Vector3(localPosition.x, localPosition.y, localPosition.z);
-      rotatedPosition.applyQuaternion(cameraQuaternion);
-
-      // Adjust position based on camera offset
+      const rotatedPosition = new THREE.Vector3(localPosition.x, localPosition.y, localPosition.z).applyQuaternion(cameraQuaternion);
       const offsetVector = new THREE.Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z);
       rotatedPosition.add(offsetVector);
-
-      // Convert rotated position back to object3d compatible format
       return { x: rotatedPosition.x, y: rotatedPosition.y, z: rotatedPosition.z };
     }
   </script>
   <body style="margin: 0px; overflow: hidden;">
-    <!-- <div id="loading-screen">
+    <div id="loading-screen">
       <p id="loading-text">Loading...</p>
-    </div> -->
+    </div>
     <a-scene embedded>
-      <a-marker preset="hiro">
+      <a-marker preset="hiro" marker-tracker="camera: #myCamera">
+        <!-- Your model entities here -->
+      </a-marker>
+      <a-entity id="myCamera" camera look-controls></a-entity>
+
+      <a-assets>
+        <!-- Load your assets here -->
+        <a-asset-item id="model1" src="src/XmasTree.gltf"></a-asset-item>
+        <a-asset-item id="model2" src="src/surface/scene.gltf"></a-asset-item>
+      </a-assets>
+
+      <a-entity>
+        <!-- Use asset management to load the models -->
         <a-entity
           id="yourModelEntity"
-          scale="8 8 8"
-          rotation="0 0 0"
-          position="0 0 0"
-          gltf-model="src/XmasTree.gltf"
-          animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
-          model-loader
-        ></a-entity>
-        <a-entity
-          id="yourModelEntity2"
           scale="2 2 2"
           rotation="0 0 0"
           position="0 0 0"
-          gltf-model="src/surface/scene.gltf"
-          animation-mixer
-          model-loader
+          gltf-model="#model1"
+          animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
         ></a-entity>
-      </a-marker>
-      <a-entity camera ></a-entity>
+        <a-entity
+          id="yourModelEntity2"
+          scale="1 1 1"
+          rotation="0 0 0"
+          position="0 0 0"
+          gltf-model="#model2"
+          animation-mixer
+        ></a-entity>
+      </a-entity>
     </a-scene>
+
+    <script>
+      // Get the loading screen element
+      var loadingScreen = document.getElementById('loading-screen');
+
+      // Get the A-Frame scene element
+      var scene = document.querySelector('a-scene');
+
+      // Hide the loading screen when assets are loaded
+      scene.addEventListener('loaded', function () {
+        loadingScreen.style.display = 'none';
+      });
+    </script>
   </body>
 </html>
