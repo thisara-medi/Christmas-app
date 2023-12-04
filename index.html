@@ -35,19 +35,13 @@
       },
     });
 
-    AFRAME.registerComponent("surface-detector", {
+    AFRAME.registerComponent("tap-place", {
       init: function () {
-        const sceneEl = document.querySelector("a-scene");
+        const scene = document.querySelector("a-scene");
 
-        // Listen for surface detection events
-        sceneEl.addEventListener("markerFound", (event) => {
-          console.log("Surface detected:", event.target.id);
-          // You can perform additional actions when a surface is detected
-        });
-
-        sceneEl.addEventListener("markerLost", (event) => {
-          console.log("Surface lost:", event.target.id);
-          // You can perform additional actions when a surface is lost
+        scene.addEventListener("click", (event) => {
+          const touchPoint = event.detail.intersection.point;
+          this.el.object3D.position.copy(touchPoint);
         });
       },
     });
@@ -56,14 +50,15 @@
     <div id="loading-screen">
       <p id="loading-text">Loading...</p>
     </div>
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; patternRatio: 0;">
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+      <a-entity camera look-controls></a-entity>
       <a-entity
         id="yourModelEntity"
         scale="8 8 8"
         rotation="0 0 0"
         position="0 0 0"
         gltf-model="src/XmasTree.gltf"
-        animation__rotate="property: rotation; dur: 20000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
+        animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
         model-loader
       ></a-entity>
       <a-entity
@@ -74,12 +69,8 @@
         gltf-model="src/surface/scene.gltf"
         animation-mixer
         model-loader
+        tap-place
       ></a-entity>
-
-      <!-- Use the ar-hit-test component with the target entity -->
-      <a-entity id="hit-test-point" surface-detector></a-entity>
-
-      <a-entity camera look-controls></a-entity>
     </a-scene>
   </body>
 </html>
