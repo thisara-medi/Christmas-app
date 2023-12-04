@@ -47,27 +47,25 @@
     <div id="loading-screen">
       <p id="loading-text">Loading...</p>
     </div>
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-      <a-marker preset="hiro">
-        <a-entity
-          id="yourModelEntity"
-          scale="8 8 8"
-          rotation="0 0 0"
-          position="0 0 0"
-          gltf-model="src/XmasTree.gltf"
-          animation__rotate="property: rotation; dur: 20000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
-          model-loader
-        ></a-entity>
-        <a-entity
-          id="yourModelEntity2"
-          scale="2 2 2"
-          rotation="0 0 0"
-          position="0 0 0"
-          gltf-model="src/surface/scene.gltf"
-          animation-mixer
-          model-loader
-        ></a-entity>
-      </a-marker>
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; patternRatio: 0;">
+      <a-entity
+        id="yourModelEntity"
+        scale="8 8 8"
+        rotation="0 0 0"
+        position="0 0 0"
+        gltf-model="src/XmasTree.gltf"
+        animation__rotate="property: rotation; dur: 20000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
+        model-loader
+      ></a-entity>
+      <a-entity
+        id="yourModelEntity2"
+        scale="2 2 2"
+        rotation="0 0 0"
+        position="0 0 0"
+        gltf-model="src/surface/scene.gltf"
+        animation-mixer
+        model-loader
+      ></a-entity>
       <a-entity camera look-controls></a-entity>
     </a-scene>
   </body>
