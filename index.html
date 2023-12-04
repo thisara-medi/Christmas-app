@@ -38,6 +38,7 @@
 
         this.el.sceneEl.addEventListener("markerLost", () => {
           // Keep the model visible when marker is lost
+          this.el.object3D.visible = true;
           loadingText.textContent = "Marker lost. Please bring it back into view.";
         });
 
