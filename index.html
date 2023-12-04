@@ -1,66 +1,81 @@
 <!DOCTYPE html>
 <html>
-  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-  <style>
-    #loading-screen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  <head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <style>
+      #loading-screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-    #loading-text {
-      color: white;
-      font-size: 24px;
-    }
-  </style>
-  <script>
-    AFRAME.registerComponent("model-loader", {
-      init: function () {
-        const loadingScreen = document.getElementById("loading-screen");
-        const loadingText = document.getElementById("loading-text");
-
-        this.el.addEventListener("model-loaded", () => {
-          loadingScreen.style.display = "none";
-        });
-
-        // Show loading screen initially
-        loadingText.textContent = "Loading...";
-      },
-    });
-  </script>
+      #loading-text {
+        color: white;
+        font-size: 24px;
+      }
+    </style>
+  </head>
   <body style="margin: 0px; overflow: hidden;">
     <div id="loading-screen">
       <p id="loading-text">Loading...</p>
     </div>
-    <a-scene embedded>
-      <a-marker preset="hiro">
-      <a-entity
-        id="yourModelEntity"
-        scale="8 8 8 8"
-        rotation="0 0 0"
-        position="0 0 0"
-        gltf-model="src/XmasTree.gltf"
-        animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
-        model-loader
-      ></a-entity>
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+      <a-anchor hit-testing-enabled="true" on-hitstart="handleSurfaceFound" on-hitend="handleSurfaceLost">
+        <a-entity
+          id="yourModelEntity"
+          scale="8 8 8"
+          rotation="0 0 0"
+          position="0 0 0"
+          gltf-model="src/XmasTree.gltf"
+          animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
+          model-loader
+        ></a-entity>
+      </a-anchor>
       <a-entity
         id="yourModelEntity2"
-        scale="2 2 2 2"
+        scale="2 2 2"
         rotation="0 0 0"
         position="0 0 0"
         gltf-model="src/surface/scene.gltf"
         animation-mixer
         model-loader
       ></a-entity>
-      </a-marker>
       <a-entity camera look-controls></a-entity>
     </a-scene>
+
+    <script>
+      AFRAME.registerComponent("model-loader", {
+        init: function () {
+          const loadingScreen = document.getElementById("loading-screen");
+          const loadingText = document.getElementById("loading-text");
+
+          this.el.addEventListener("model-loaded", () => {
+            loadingScreen.style.display = "none";
+          });
+
+          // Show loading screen initially
+          loadingText.textContent = "Loading...";
+        },
+      });
+
+      function handleSurfaceFound() {
+        console.log("Surface Found");
+        // Set the visibility of your models when the surface is found
+        document.getElementById("yourModelEntity").setAttribute("visible", true);
+        document.getElementById("yourModelEntity2").setAttribute("visible", true);
+      }
+
+      function handleSurfaceLost() {
+        console.log("Surface Lost");
+        // You can perform actions when a surface is lost
+      }
+    </script>
   </body>
 </html>
