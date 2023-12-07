@@ -30,6 +30,7 @@
         this.initialPosition = new THREE.Vector3();
         this.initialRotation = new THREE.Euler();
 
+        this.smoothFactor = 0.5
         this.el.addEventListener("model-loaded", () => {
           loadingScreen.style.display = "none";
           // Store the initial position and rotation when the model is first loaded
