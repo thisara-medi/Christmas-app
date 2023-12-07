@@ -45,7 +45,7 @@ src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"><
             const cameraQuaternion = THREE.Quaternion.fromEuler(cameraRotation);
 
             // Calculate the new marker position based on the camera position and rotation
-            const newMarkerPosition = transformLocalToWorldCoordinates(marker.getAttribute('position'), cameraPosition, cameraQuaternion);
+           // const newMarkerPosition = transformLocalToWorldCoordinates(marker.getAttribute('position'), cameraPosition, cameraQuaternion);
 
             // Update the marker's position
             marker.setAttribute("position", newMarkerPosition);
@@ -53,8 +53,8 @@ src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"><
           };
 
           // Add event listener for camera position and rotation changes
-          camera.addEventListener("positionchange", updateMarkerPose);
-          camera.addEventListener("rotationchange", updateMarkerPose);
+       //   camera.addEventListener("positionchange", updateMarkerPose);
+        //  camera.addEventListener("rotationchange", updateMarkerPose);
         });
       },
     });
