@@ -27,6 +27,8 @@
         const loadingText = document.getElementById("loading-text");
 
         this.el.addEventListener("model-loaded", () => {
+          // Remove the AR.js component to freeze the scene
+          this.el.removeAttribute("arjs");
           loadingScreen.style.display = "none";
         });
 
@@ -39,11 +41,11 @@
     <div id="loading-screen">
       <p id="loading-text">Loading...</p>
     </div>
-    <a-scene embedded arjs arjs-throttle="200">
+    <a-scene embedded arjs>
       <a-marker preset="hiro">
         <a-entity
           id="yourModelEntity"
-          scale="2 2 2"         
+          scale="3 3 3"         
           rotation="0 0 0"
           position="0 0 0"
           gltf-model="src/XmasTree.gltf"
@@ -51,7 +53,7 @@
         ></a-entity>
       </a-marker>
 
-     <a-entity camera"></a-entity>
+      <a-entity camera></a-entity>
     </a-scene>
   </body>
 </html>
