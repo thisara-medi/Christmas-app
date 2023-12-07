@@ -40,16 +40,7 @@
         // Show loading screen initially
         loadingText.textContent = "Loading...";
       },
-      tick: function () {
-        // Check if the marker is currently visible
-        const markerVisible = this.el.object3D.visible;
-
-        // If the marker is visible, set the model's position and rotation to the initial values
-        if (markerVisible) {
-          this.el.object3D.position.copy(this.initialPosition);
-          this.el.object3D.rotation.copy(this.initialRotation);
-        }
-      },
+     
     });
   </script>
   <body style="margin: 0px; overflow: hidden;">
