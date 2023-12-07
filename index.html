@@ -26,12 +26,10 @@
         const marker = this.el;
         const model = document.getElementById("yourModelEntity");
 
-        // Update the model's rotation based on the camera's rotation, excluding X rotation
+        // Update the model's rotation based on the camera's rotation without updating Z-axis rotation
         this.el.sceneEl.addEventListener("update", () => {
           const cameraRotation = this.el.sceneEl.camera.el.getAttribute("rotation");
-          
-          // Keep X rotation fixed to 0
-          model.setAttribute("rotation", { x: 0, y: cameraRotation.y, z: cameraRotation.z });
+          model.setAttribute("rotation", { x: cameraRotation.x, y: cameraRotation.y, z: 0 });
         });
       },
     });
@@ -53,3 +51,4 @@
     </a-scene>
   </body>
 </html>
+
