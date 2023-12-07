@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <script
- 
-src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-
-  
-<script
- 
-src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <style>
     #loading-screen {
       position: absolute;
@@ -28,56 +22,21 @@ src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"><
   </style>
   <script>
     AFRAME.registerComponent("marker-tracker", {
-      schema: {
-        camera: { type: "selector" },
-      },
-
       init: function () {
         const marker = this.el;
-        const camera = this.data.camera;
+        const model = document.getElementById("yourModelEntity");
 
-        this.el.addEventListener("model-loaded", () => {
-          const updateMarkerPose = () => {
-          //  const cameraPosition = camera.getAttribute("position");
-          //  const cameraRotation = camera.getAttribute("rotation");
-
-          //   Convert camera rotation from Euler angles to quaternion
-          //  const cameraQuaternion = THREE.Quaternion.fromEuler(cameraRotation);
-
-          //   Calculate the new marker position based on the camera position and rotation
-           // const newMarkerPosition = transformLocalToWorldCoordinates(marker.getAttribute('position'), cameraPosition, cameraQuaternion);
-
-           //  Update the marker's position
-          //  marker.setAttribute("position", newMarkerPosition);
-           // console.log(newMarkerPosition);
-          };
-
-          // Add event listener for camera position and rotation changes
-        //  camera.addEventListener("positionchange", updateMarkerPose);
-        //  camera.addEventListener("rotationchange", updateMarkerPose);
+        // Update the model's rotation based on the camera's rotation
+        this.el.sceneEl.addEventListener("update", () => {
+          const cameraRotation = this.el.sceneEl.camera.el.getAttribute("rotation");
+          model.setAttribute("rotation", cameraRotation);
         });
       },
     });
-
-    function transformLocalToWorldCoordinates(localPosition, cameraPosition, cameraQuaternion) {
-      // Apply camera rotation to local position
-      const rotatedPosition = new THREE.Vector3(localPosition.x, localPosition.y, localPosition.z);
-      rotatedPosition.applyQuaternion(cameraQuaternion);
-
-      // Adjust position based on camera offset
-      const offsetVector = new THREE.Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-      rotatedPosition.add(offsetVector);
-
-      // Convert rotated position back to object3d compatible format
-      return { x: rotatedPosition.x, y: rotatedPosition.y, z: rotatedPosition.z };
-    }
   </script>
   <body style="margin: 0px; overflow: hidden;">
-    <!-- <div id="loading-screen">
-      <p id="loading-text">Loading...</p>
-    </div> -->
     <a-scene embedded>
-      <a-marker preset="hiro">
+      <a-marker preset="hiro" marker-tracker>
         <a-entity
           id="yourModelEntity"
           scale="1 1 1"
@@ -87,17 +46,8 @@ src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"><
           animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
           model-loader
         ></a-entity>
-     <!--   <a-entity
-          id="yourModelEntity2"
-          scale="1 1 1"
-          rotation="0 0 0"
-          position="0 0 0"
-          gltf-model="src/surface/scene.gltf"
-          animation-mixer
-          model-loader
-        ></a-entity> -->
       </a-marker>
-      <a-entity camera ></a-entity>
+      <a-entity camera></a-entity>
     </a-scene>
   </body>
 </html>
