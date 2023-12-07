@@ -20,32 +20,7 @@
       font-size: 24px;
     }
   </style>
-  <script>
-  AFRAME.registerComponent("smooth-marker", {
-    init: function () {
-      this.marker = this.el;
-      this.model = document.getElementById("yourModel");
-
-      this.smoothFactor = 0.2; // Adjust this value to control the smoothing
-
-      this.marker.addEventListener("markerFound", this.onMarkerFound.bind(this));
-    },
-
-    onMarkerFound: function () {
-      this.marker.sceneEl.addEventListener("update", this.update.bind(this));
-    },
-
-    update: function () {
-      const markerPosition = this.marker.object3D.position;
-      const modelPosition = this.model.object3D.position;
-
-      // Smoothly interpolate between current position and marker position
-      modelPosition.x += this.smoothFactor * (markerPosition.x - modelPosition.x);
-      modelPosition.y += this.smoothFactor * (markerPosition.y - modelPosition.y);
-      modelPosition.z += this.smoothFactor * (markerPosition.z - modelPosition.z);
-    },
-  });
-</script>
+ 
   <script>
     AFRAME.registerComponent("model-loader", {
       init: function () {
