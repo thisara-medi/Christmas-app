@@ -39,7 +39,7 @@
     <div id="loading-screen">
       <p id="loading-text">Loading...</p>
     </div>
-    <a-scene embedded arjs>
+    <a-scene embedded arjs arjs-throttle="20">
       <a-marker preset="hiro">
         <a-entity
           id="yourModelEntity"
@@ -51,8 +51,7 @@
         ></a-entity>
       </a-marker>
 
-      <a-entity camera></a-entity>
+     <a-entity camera position="0 1.6 0" rotation="-10 0 0"></a-entity>
     </a-scene>
   </body>
 </html>
-
