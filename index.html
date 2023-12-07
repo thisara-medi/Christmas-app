@@ -21,44 +21,36 @@
     }
   </style>
   <script>
-    AFRAME.registerComponent("marker-tracker", {
+    AFRAME.registerComponent("model-loader", {
       init: function () {
-        const marker = this.el;
-        const model = document.getElementById("yourModelEntity");
+        const loadingScreen = document.getElementById("loading-screen");
+        const loadingText = document.getElementById("loading-text");
 
-        // Define the side of the marker you want the model to face
-        const designatedSideRotation = { x: 0, y: 0, z: 0 };
-
-        // Update the model's rotation based on the camera's rotation while keeping Z-axis fixed
-        this.el.sceneEl.addEventListener("update", () => {
-          const cameraRotation = this.el.sceneEl.camera.el.getAttribute("rotation");
-
-          // Calculate the rotation needed to face the designated side of the marker
-          const rotationToDesignatedSide = {
-            x: designatedSideRotation.x - cameraRotation.x,
-            y: designatedSideRotation.y - cameraRotation.y,
-            z: designatedSideRotation.z,
-          };
-
-          // Apply the rotation to the model
-          model.setAttribute("rotation", rotationToDesignatedSide);
+        this.el.addEventListener("model-loaded", () => {
+          loadingScreen.style.display = "none";
         });
+
+        // Show loading screen initially
+        loadingText.textContent = "Loading...";
       },
     });
   </script>
   <body style="margin: 0px; overflow: hidden;">
-    <a-scene embedded>
-      <a-marker preset="hiro" marker-tracker>
+    <div id="loading-screen">
+      <p id="loading-text">Loading...</p>
+    </div>
+    <a-scene embedded arjs>
+      <a-marker preset="hiro">
         <a-entity
           id="yourModelEntity"
-          scale="1 1 1"
+          scale="5 5 5 5"         
           rotation="0 0 0"
-          position="0 0 0"
+          position="0 150 0"
           gltf-model="src/XmasTree.gltf"
-          animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
           model-loader
         ></a-entity>
       </a-marker>
+
       <a-entity camera></a-entity>
     </a-scene>
   </body>
