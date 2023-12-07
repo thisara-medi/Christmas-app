@@ -26,10 +26,22 @@
         const marker = this.el;
         const model = document.getElementById("yourModelEntity");
 
-        // Update the model's rotation based on the camera's rotation without updating Z-axis rotation
+        // Define the side of the marker you want the model to face
+        const designatedSideRotation = { x: 0, y: 0, z: 0 };
+
+        // Update the model's rotation based on the camera's rotation while keeping Z-axis fixed
         this.el.sceneEl.addEventListener("update", () => {
           const cameraRotation = this.el.sceneEl.camera.el.getAttribute("rotation");
-          model.setAttribute("rotation", { x: cameraRotation.x, y: cameraRotation.y, z: 0 });
+
+          // Calculate the rotation needed to face the designated side of the marker
+          const rotationToDesignatedSide = {
+            x: designatedSideRotation.x - cameraRotation.x,
+            y: designatedSideRotation.y - cameraRotation.y,
+            z: designatedSideRotation.z,
+          };
+
+          // Apply the rotation to the model
+          model.setAttribute("rotation", rotationToDesignatedSide);
         });
       },
     });
