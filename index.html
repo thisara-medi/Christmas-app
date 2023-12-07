@@ -26,20 +26,23 @@
         const loadingScreen = document.getElementById("loading-screen");
         const loadingText = document.getElementById("loading-text");
 
-        // Reference to AR.js component
-        const arjsComponent = this.el.components.arjs;
-
         this.el.addEventListener("model-loaded", () => {
-          // Remove the AR.js component to freeze the scene
-          this.el.removeAttribute("arjs");
           loadingScreen.style.display = "none";
-
-          // Manually render the scene after removing AR.js
-          arjsComponent.sceneRenderer.render(arjsComponent.el.object3DMap.camera);
+          // Initially set the model to be visible
+          this.el.object3D.visible = true;
         });
 
         // Show loading screen initially
         loadingText.textContent = "Loading...";
+      },
+      tick: function () {
+        // Check if the marker is currently visible
+        const markerVisible = this.el.object3D.visible;
+
+        // You can add additional conditions here if needed
+
+        // Update the visibility of the model based on conditions
+        this.el.object3D.visible = markerVisible;
       },
     });
   </script>
@@ -48,10 +51,10 @@
       <p id="loading-text">Loading...</p>
     </div>
     <a-scene embedded arjs>
-      <a-marker preset="hiro" follow="false">
+      <a-marker preset="hiro">
         <a-entity
           id="yourModelEntity"
-          scale="2 2 2"         
+          scale="3 3 3"         
           rotation="0 0 0"
           position="0 0 0"
           gltf-model="src/XmasTree.gltf"
