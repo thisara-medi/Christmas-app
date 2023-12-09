@@ -29,15 +29,12 @@
       cursor: pointer;
     }
   </style>
+ 
   <script>
-    AFRAME.registerComponent("marker-tracker", {
-      schema: {
-        camera: { type: "selector" },
-      },
-
+    AFRAME.registerComponent("model-loader", {
       init: function () {
-        const marker = this.el;
-        const camera = this.data.camera;
+        const loadingScreen = document.getElementById("loading-screen");
+        const loadingText = document.getElementById("loading-text");
 
         this.el.addEventListener("model-loaded", () => {
           const updateMarkerPose = () => {
@@ -54,53 +51,32 @@
               cameraQuaternion
             );
 
-            // Update the marker's position
-            marker.setAttribute("position", newMarkerPosition);
-            console.log(newMarkerPosition);
-          };
-
-          // Add event listener for camera position and rotation changes
-          camera.addEventListener("positionchange", updateMarkerPose);
-          camera.addEventListener("rotationchange", updateMarkerPose);
+        
+        this.el.addEventListener("model-loaded", () => {
+          loadingScreen.style.display = "none";
+          // Store the initial position and rotation when the model is first loaded
+          this.initialPosition.copy(this.el.object3D.position);
+          this.initialRotation.copy(this.el.object3D.rotation);
         });
+
+        // Show loading screen initially
+        loadingText.textContent = "Loading...";
       },
+     
     });
-
-    function transformLocalToWorldCoordinates(localPosition, cameraPosition, cameraQuaternion) {
-      // Apply camera rotation to local position
-      const rotatedPosition = new THREE.Vector3(localPosition.x, localPosition.y, localPosition.z);
-      rotatedPosition.applyQuaternion(cameraQuaternion);
-
-      // Adjust position based on camera offset
-      const offsetVector = new THREE.Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-      rotatedPosition.add(offsetVector);
-
-      // Convert rotated position back to object3d compatible format
-      return { x: rotatedPosition.x, y: rotatedPosition.y, z: rotatedPosition.z };
-    }
   </script>
   <body style="margin: 0px; overflow: hidden;">
-    <!-- <div id="loading-screen">
+    <div id="loading-screen">
       <p id="loading-text">Loading...</p>
-    </div> -->
-    <a-scene embedded>
-      <a-marker preset="hiro">
+    </div>
+    <a-scene embedded arjs>
+     <a-marker preset="hiro" arjs-anchor>
         <a-entity
           id="yourModelEntity"
-          scale="8 8 8"
+          scale="2 2 2"         
           rotation="0 0 0"
           position="0 0 0"
           gltf-model="src/XmasTree.gltf"
-          animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
-          model-loader
-        ></a-entity>
-        <a-entity
-          id="yourModelEntity2"
-          scale="2 2 2"
-          rotation="0 0 0"
-          position="0 0 0"
-          gltf-model="src/surface/scene.gltf"
-          animation-mixer
           model-loader
         ></a-entity>
 
