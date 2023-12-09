@@ -83,6 +83,15 @@
     <!-- <div id="loading-screen">
       <p id="loading-text">Loading...</p>
     </div> -->
+    <!-- Image button outside AR scene -->
+    <img
+      class="link-button"
+      src="src/win.png"
+      width="10"
+      height="10"
+      onclick="window.location.href='https://your-link-url.com';"
+    />
+
     <a-scene embedded>
       <a-marker preset="hiro">
         <a-entity
@@ -103,16 +112,6 @@
           animation-mixer
           model-loader
         ></a-entity>
-
-        <!-- Add an image button as a link -->
-        <a-image
-          class="link-button"
-          src="src/win.png"
-          width="50"
-          height="50"
-          position="0 0 0"
-          onclick="window.location.href='https://your-link-url.com';"
-        ></a-image>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
