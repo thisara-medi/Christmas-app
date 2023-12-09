@@ -20,13 +20,12 @@
       font-size: 24px;
     }
 
-    /* Add some styling for the image button */
-    .link-button {
+     .link-button {
       position: absolute;
       bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 10px;
       cursor: pointer;
+      z-index: 1000; /* Set a higher z-index to make sure it appears above the A-Frame scene */
     }
   </style>
   <script>
@@ -89,7 +88,7 @@
       src="src/win.png"
       width="100"
       height="100"
-      onclick="window.location.href='https://www.google.com';"
+      onclick="window.open('https://www.google.com', '_blank');"
     />
 
     <a-scene embedded>
@@ -100,18 +99,9 @@
           rotation="0 0 0"
           position="0 0 0"
           gltf-model="src/XmasTree.gltf"
-          animation__rotate="property: rotation; dur: 80000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
           model-loader
         ></a-entity>
-        <a-entity
-          id="yourModelEntity2"
-          scale="2 2 2"
-          rotation="0 0 0"
-          position="0 0 0"
-          gltf-model="src/surface/scene.gltf"
-          animation-mixer
-          model-loader
-        ></a-entity>
+
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
